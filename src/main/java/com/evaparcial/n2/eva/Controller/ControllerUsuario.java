@@ -21,8 +21,30 @@ public class ControllerUsuario {
 
     @GetMapping
     public ResponseEntity<List<Usuario>> Listar(){
-        
+        List<Usuario> usuario = serviceUsuario.findAll();
+        if (usuario.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(usuario);
     }
+
+    @PostMapping
+    public ResponseEntity<Usuario> guardar(@RequestBody Usuario usuario){
+        Usuario usuarioNuevo = serviceUsuario.save(usuario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioNuevo);
+    }
+
+     @GetMapping
+    public ResponseEntity<Usuario> buscar(@PathVariable Integr id){
+        try {
+            Usuario usuario = serviceUsuario.findById(id);
+            return ResponseEntity.ok(usuario);
+        }catch (Exception e) {
+            return ResponseEntity.noContent().build();
+        }
+       
+    }
+
     
 
 }
