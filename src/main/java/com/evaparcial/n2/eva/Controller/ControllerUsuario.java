@@ -40,7 +40,18 @@ public class ControllerUsuario {
             Usuario usuario = serviceUsuario.findById(id);
             return ResponseEntity.ok(usuario);
         }catch (Exception e) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.noFound().build();
+        }
+       
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Long id){
+        try {
+            serviceUsuario.delete(id);
+             return ResponseEntity.noContent().build();
+        }catch (Exception e) {
+             return ResponseEntity.noFound().build();
         }
        
     }
